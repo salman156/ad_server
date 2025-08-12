@@ -7,5 +7,17 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: user
+      POSTGRES_DB: Fake_Avito
     ports:
       - "5430:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    restart: unless-stopped
+    
+        
