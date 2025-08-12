@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"ad_server/handlers"
 	"log"
 	"strings"
 
@@ -22,26 +22,8 @@ func main() {
 
 	//Get запрос
 	app.Get("/get_value/:id", func(c *fiber.Ctx) error {
+		return (handlers.GetFromMap(c))
 
-		//Вытаскивание ключа и преобразование в числовой тип
-		idStr := c.Params("id")
-		id := 0
-		_, err := fmt.Sscan(idStr, &id)
-
-		//Проверка на корректность ключа
-		if err != nil {
-			return c.Status(fiber.StatusNotFound).SendString("Incorrect key format!")
-		}
-
-		//Получение значения
-		value, ok := mp1[id]
-
-		//Вывод результата
-		if !ok {
-			return c.Status(fiber.StatusNotFound).SendString("Key not found!")
-		}
-
-		return c.SendString("Value: " + value)
 	})
 	//Запуск сервера
 	log.Fatal(app.Listen(":3000"))
